@@ -1,6 +1,6 @@
 # DogParkTaskbar
 
-Cute dog just playing above your taskbar.  
+A cute dog just playing above your taskbar.  
 JP: タスクバーの上でわんこがただ遊びまわるアプリです。
 
 ![Overview](doc/DogParkTaskbar.gif)

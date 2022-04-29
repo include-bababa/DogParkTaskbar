@@ -162,9 +162,9 @@ namespace DogParkTaskbar.ViewModels
             var kick = false;
 
             var diffX = this.ball.Left - this.left;
-            if (Math.Abs(diffX) < 15)
+            if (Math.Abs(diffX) < 16)
             {
-                var catchProbability = this.Direction > 0 ? 0.5 : 0.7;
+                var catchProbability = this.Direction > 0 ? 0.3 : 0.7;
                 if (this.GetRandomValue(0.0, 1.0) < catchProbability)
                 {
                     // catch
@@ -268,6 +268,7 @@ namespace DogParkTaskbar.ViewModels
                 var left = this.left + (this.speedX * interval);
                 this.Left = left;
 
+                // reach end
                 if (this.Left < -64)
                 {
                     this.waitRespawn = this.GetRandomValue(3.0, 10.0);
