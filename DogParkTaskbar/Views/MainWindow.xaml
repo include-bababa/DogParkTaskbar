@@ -1,0 +1,71 @@
+﻿<Window x:Class="DogParkTaskbar.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:myBehaviors="clr-namespace:DogParkTaskbar.Behaviors"
+        xmlns:myData="clr-namespace:DogParkTaskbar.Data"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        AllowsTransparency="True"
+        ShowInTaskbar="False"
+        Topmost="True"
+        WindowStyle="None"
+        Background="Transparent"
+        Title="DogParkTaskbar"
+        Icon="/DogParkTaskbar;component/Resources/icon.ico"
+        Top="{Binding Top}"
+        Left="{Binding Left}"
+        Width="{Binding Width}"
+        Height="{Binding Height}">
+    <Window.Resources>
+        <myData:ValueAdder x:Key="ValueAdder" />
+    </Window.Resources>
+
+    <Window.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Close" Click="MenuItem_Click" />
+        </ContextMenu>
+    </Window.ContextMenu>
+
+    <b:Interaction.Behaviors>
+        <myBehaviors:WindowMouseTransparentBehavior IsEnabled="True" />
+        <myBehaviors:KeepWindowTopmostBehavior Interval="1.0" />
+    </b:Interaction.Behaviors>
+
+    <!--
+    <b:Interaction.Triggers>
+        <myBehaviors:AnyRoutedEventTrigger>
+            <myBehaviors:DebugWriteAction />
+        </myBehaviors:AnyRoutedEventTrigger>
+    </b:Interaction.Triggers>
+    -->
+
+    <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Image Source="{Binding Dog.CurrentImage}"
+               Canvas.Left="{Binding Dog.Left, Converter={StaticResource ValueAdder}, ConverterParameter=-16}"
+               Canvas.Bottom="0"
+               Width="32"
+               Height="32">
+            <Image.RenderTransform>
+                <ScaleTransform ScaleX="{Binding Dog.Direction}" CenterX="16" />
+            </Image.RenderTransform>
+        </Image>
+        <Image Source="pack://application:,,,/DogParkTaskbar;component/Resources/ball.png"
+               Canvas.Left="{Binding Ball.Left, Converter={StaticResource ValueAdder}, ConverterParameter=-3}"
+               Canvas.Bottom="{Binding Ball.Bottom, Converter={StaticResource ValueAdder}, ConverterParameter=0}"
+               Width="6"
+               Height="6">
+            <Image.Style>
+                <Style TargetType="{x:Type Image}">
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Dog.IsBallCatched}" Value="True">
+                            <Setter Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
+    </Canvas>
+
+</Window>

@@ -1,0 +1,69 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net472</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>DogParkTaskbar</AssemblyName>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Resources\ball.png" />
+    <None Remove="Resources\dog_00.png" />
+    <None Remove="Resources\dog_01.png" />
+    <None Remove="Resources\dog_02.png" />
+    <None Remove="Resources\dog_03.png" />
+    <None Remove="Resources\dog_10.png" />
+    <None Remove="Resources\dog_11.png" />
+    <None Remove="Resources\dog_12.png" />
+    <None Remove="Resources\dog_13.png" />
+    <None Remove="Resources\dog_20.png" />
+    <None Remove="Resources\dog_21.png" />
+    <None Remove="Resources\dog_22.png" />
+    <None Remove="Resources\dog_23.png" />
+    <None Remove="Resources\dog_turn_00.png" />
+    <None Remove="Resources\dog_turn_01.png" />
+    <None Remove="Resources\dog_turn_20.png" />
+    <None Remove="Resources\dog_turn_21.png" />
+    <None Remove="Resources\icon.ico" />
+    <None Remove="Resources\icon_16x16.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Prism.Unity" Version="8.0.0.1909" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ball.png" />
+    <Resource Include="Resources\dog_00.png" />
+    <Resource Include="Resources\dog_01.png" />
+    <Resource Include="Resources\dog_02.png" />
+    <Resource Include="Resources\dog_03.png" />
+    <Resource Include="Resources\dog_10.png" />
+    <Resource Include="Resources\dog_11.png" />
+    <Resource Include="Resources\dog_12.png" />
+    <Resource Include="Resources\dog_13.png" />
+    <Resource Include="Resources\dog_20.png" />
+    <Resource Include="Resources\dog_21.png" />
+    <Resource Include="Resources\dog_22.png" />
+    <Resource Include="Resources\dog_23.png" />
+    <Resource Include="Resources\dog_turn_00.png" />
+    <Resource Include="Resources\dog_turn_01.png" />
+    <Resource Include="Resources\dog_turn_20.png" />
+    <Resource Include="Resources\dog_turn_21.png" />
+    <Resource Include="Resources\icon.ico" />
+    <Resource Include="Resources\icon_16x16.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Resources\Strings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>
