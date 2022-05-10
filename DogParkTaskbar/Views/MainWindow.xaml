@@ -21,12 +21,6 @@
         <myData:ValueAdder x:Key="ValueAdder" />
     </Window.Resources>
 
-    <Window.ContextMenu>
-        <ContextMenu>
-            <MenuItem Header="Close" Click="MenuItem_Click" />
-        </ContextMenu>
-    </Window.ContextMenu>
-
     <b:Interaction.Behaviors>
         <myBehaviors:WindowMouseTransparentBehavior IsEnabled="True" />
         <myBehaviors:KeepWindowTopmostBehavior Interval="1.0" />

@@ -22,11 +22,5 @@ namespace DogParkTaskbar.Views
         {
             this.InitializeComponent();
         }
-
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO: temporary
-            this.Close();
-        }
     }
 }
