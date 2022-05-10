@@ -10,6 +10,7 @@ namespace DogParkTaskbar.ViewModels
     using System;
     using System.Windows.Forms;
 
+    using DogParkTaskbar.Controllers;
     using DogParkTaskbar.Models;
 
     using Prism.Mvvm;
@@ -29,9 +30,10 @@ namespace DogParkTaskbar.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
         /// </summary>
-        public MainWindowViewModel()
+        /// <param name="screenController"></param>
+        public MainWindowViewModel(IScreenController screenController)
         {
-            this.UpdatePosition();
+            this.UpdatePosition(screenController.CurrentScreen);
 
             this.Ball = new BallViewModel();
             this.Dog = new DogViewModel(this.Width, this.Ball);
@@ -39,6 +41,12 @@ namespace DogParkTaskbar.ViewModels
             this.gameTimer = new GameTimer();
             this.gameTimer.Updated += this.OnUpdate;
             this.gameTimer.Start();
+
+            // change position when selected screen is changed
+            screenController.ScreenChanged += (s_, ev) =>
+            {
+                this.UpdatePosition(ev.ScreenIndex);
+            };
         }
 
         /// <summary>
@@ -96,10 +104,12 @@ namespace DogParkTaskbar.ViewModels
             this.Dog.Update(interval);
         }
 
-        private void UpdatePosition()
+        private void UpdatePosition(int screenIndex)
         {
+            var screen = screenIndex >= 0 ? Screen.AllScreens[screenIndex] : Screen.PrimaryScreen;
+
             // place at the bottom of the working area
-            var workingArea = Screen.PrimaryScreen.WorkingArea;
+            var workingArea = screen.WorkingArea;
             this.Left = workingArea.Left;
             this.Top = workingArea.Bottom - 32;
             this.Width = workingArea.Width;

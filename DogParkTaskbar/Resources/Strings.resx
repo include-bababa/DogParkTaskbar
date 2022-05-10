@@ -120,6 +120,12 @@
   <data name="TrayMenuClose" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="TrayMenuPlacement" xml:space="preserve">
+    <value>Placement</value>
+  </data>
+  <data name="TrayMenuScreen" xml:space="preserve">
+    <value>screen</value>
+  </data>
   <data name="TrayToolTip" xml:space="preserve">
     <value>DogParkTaskbar</value>
   </data>

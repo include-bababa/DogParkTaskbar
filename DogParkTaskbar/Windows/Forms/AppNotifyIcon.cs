@@ -25,7 +25,8 @@ namespace DogParkTaskbar.Windows.Forms
         /// Initializes a new instance of the <see cref="AppNotifyIcon"/> class.
         /// </summary>
         /// <param name="icon">Icon shown in tray.</param>
-        public AppNotifyIcon(Icon icon)
+        /// <param name="defaultScreenIndex"></param>
+        public AppNotifyIcon(Icon icon, int defaultScreenIndex)
         {
             this.notifyIcon = new NotifyIcon()
             {
@@ -34,7 +35,31 @@ namespace DogParkTaskbar.Windows.Forms
 
             var menu = new ContextMenuStrip();
 
+            var screenSelectItem = new ToolStripMenuItem(Resources.Strings.TrayMenuPlacement);
+            var index = 0;
+            foreach (var screen in Screen.AllScreens)
+            {
+                var eventArgs = new ChangeScreenEventArgs(index);
+                var screenItem = new ToolStripMenuItem(GetOrdinal(index + 1) + " " + Resources.Strings.TrayMenuScreen);
+                screenItem.Checked = index == defaultScreenIndex;
+                screenItem.Click += (s_, e_) =>
+                {
+                    foreach (var item in screenSelectItem.DropDownItems)
+                    {
+                        ((ToolStripMenuItem)item).Checked = item == screenItem;
+                    }
+
+                    this.ScreenChanged?.Invoke(this, eventArgs);
+                };
+
+                screenSelectItem.DropDownItems.Add(screenItem);
+                ++index;
+            }
+
             this.closeItem = new ToolStripMenuItem(Resources.Strings.TrayMenuClose);
+
+            menu.Items.Add(screenSelectItem);
+            menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(this.closeItem);
 
             this.notifyIcon.ContextMenuStrip = menu;
@@ -65,6 +90,11 @@ namespace DogParkTaskbar.Windows.Forms
             add { this.closeItem.Click += value; }
             remove { this.closeItem.Click -= value; }
         }
+
+        /// <summary>
+        /// Occurs when the selected screen changed.
+        /// </summary>
+        public event EventHandler<ChangeScreenEventArgs> ScreenChanged;
 
         /// <summary>
         /// Gets or sets the ToolTip text displayed when the mouse pointer rests on a notification area icon.
@@ -112,6 +142,29 @@ namespace DogParkTaskbar.Windows.Forms
 
             // Free any unmanaged objects here.
             this.disposed = true;
+        }
+
+        private static string GetOrdinal(int num)
+        {
+            switch (num % 100)
+            {
+                case 11:
+                case 12:
+                case 13:
+                    return num.ToString() + "th";
+            }
+
+            switch (num % 10)
+            {
+                case 1:
+                    return num.ToString() + "st";
+                case 2:
+                    return num.ToString() + "nd";
+                case 3:
+                    return num.ToString() + "rd";
+            }
+
+            return num.ToString() + "th";
         }
     }
 }

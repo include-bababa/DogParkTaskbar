@@ -13,10 +13,10 @@
         Background="Transparent"
         Title="DogParkTaskbar"
         Icon="/DogParkTaskbar;component/Resources/icon.ico"
-        Top="{Binding Top}"
-        Left="{Binding Left}"
-        Width="{Binding Width}"
-        Height="{Binding Height}">
+        Top="{Binding Top, Mode=TwoWay}"
+        Left="{Binding Left, Mode=TwoWay}"
+        Width="{Binding Width, Mode=TwoWay}"
+        Height="{Binding Height, Mode=TwoWay}">
     <Window.Resources>
         <myData:ValueAdder x:Key="ValueAdder" />
     </Window.Resources>

@@ -11,6 +11,7 @@ namespace DogParkTaskbar
     using System.Drawing;
     using System.Windows;
 
+    using DogParkTaskbar.Controllers;
     using DogParkTaskbar.Views;
     using DogParkTaskbar.Windows.Forms;
 
@@ -32,24 +33,24 @@ namespace DogParkTaskbar
         /// <inheritdoc/>
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterSingleton<IScreenController, ScreenController>();
         }
 
         /// <inheritdoc/>
         protected override void OnStartup(StartupEventArgs ev)
         {
+            base.OnStartup(ev);
+
+            var screenController = this.Container.Resolve<IScreenController>();
+
             var iconStream = GetResourceStream(new Uri("pack://application:,,,/DogParkTaskbar;component/Resources/icon_16x16.ico")).Stream;
             var icon = new Icon(iconStream);
 
-            // TODO: make app icon
-            this.notifyIcon = new AppNotifyIcon(icon);
-            this.notifyIcon.Closed += (s_, e_) =>
-            {
-                this.Shutdown();
-            };
+            this.notifyIcon = new AppNotifyIcon(icon, screenController.CurrentScreen);
+            this.notifyIcon.ScreenChanged += this.NotifyIcon_ScreenChanged;
+            this.notifyIcon.Closed += this.NotifyIcon_Closed;
             this.notifyIcon.Text = DogParkTaskbar.Resources.Strings.TrayToolTip;
             this.notifyIcon.IsVisible = true;
-
-            base.OnStartup(ev);
         }
 
         /// <inheritdoc/>
@@ -58,6 +59,17 @@ namespace DogParkTaskbar
             this.notifyIcon.Dispose();
 
             base.OnExit(ev);
+        }
+
+        private void NotifyIcon_ScreenChanged(object sender, Windows.Forms.ChangeScreenEventArgs ev)
+        {
+            var screenController = this.Container.Resolve<IScreenController>();
+            screenController.CurrentScreen = ev.ScreenIndex;
+        }
+
+        private void NotifyIcon_Closed(object sender, EventArgs ev)
+        {
+            this.Shutdown();
         }
     }
 }

@@ -70,6 +70,24 @@ namespace DogParkTaskbar.Resources {
         }
         
         /// <summary>
+        ///   Placement に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TrayMenuPlacement {
+            get {
+                return ResourceManager.GetString("TrayMenuPlacement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   screen に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TrayMenuScreen {
+            get {
+                return ResourceManager.GetString("TrayMenuScreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   DogParkTaskbar に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TrayToolTip {
